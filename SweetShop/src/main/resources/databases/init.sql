@@ -20,3 +20,9 @@ CREATE TABLE IF NOT EXISTS countries
     id SERIAL PRIMARY KEY ,
     name TEXT NOT NULL
     );
+CREATE TABLE IF NOT EXISTS users
+(
+    id    SERIAL PRIMARY KEY ,
+    login  VARCHAR(200) NOT NULL ,
+    password VARCHAR(200) NOT NULL
+);
