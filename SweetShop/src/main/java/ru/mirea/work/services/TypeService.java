@@ -18,10 +18,10 @@ public class TypeService {
     public TypeService( ITypeRepository itr){
         this.itr=itr;
     }
-    public static Type getTypeById(int id){
+    public Type getTypeById(int id){
         return itr.findById(id);
     }
-    public static List<Type> getAllTypes() {
+    public List<Type> getAllTypes() {
         return itr.findAll();
     }
 }

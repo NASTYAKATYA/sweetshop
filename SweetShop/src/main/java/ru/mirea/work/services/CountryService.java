@@ -17,7 +17,7 @@ public class CountryService {
     public CountryService(ICountryRepository icr){
         this.icr=icr;
     }
-    public Country show(int id){
+    public Country getAllCountries(int id){
         return icr.findById(id);
     }
 }

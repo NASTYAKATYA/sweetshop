@@ -17,7 +17,7 @@ public class OrderService {
     public OrderService(IOrderRepository ior){
         this.ior=ior;
     }
-    public Order show(int id){
+    public Order getAllOrders(int id){
         return ior.findById(id);
     }
 }
