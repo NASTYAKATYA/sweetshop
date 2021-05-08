@@ -18,9 +18,6 @@ public class TypeService {
     public TypeService( ITypeRepository itr){
         this.itr=itr;
     }
-    public Type getTypeById(int id){
-        return itr.findById(id);
-    }
     public List<Type> getAllTypes() {
         return itr.findAll();
     }

@@ -12,14 +12,13 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "countries")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name="name", nullable = false)
     private String name;
-    @JsonIgnore
+
 
     @Override
     public String toString() {

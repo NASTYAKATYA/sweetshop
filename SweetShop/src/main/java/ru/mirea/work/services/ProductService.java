@@ -18,13 +18,14 @@ public class ProductService {
     public ProductService(IProductRepository ipr){
         this.ipr=ipr;
     }
-    public Product getProductById(int id){
+    public List<Product> getAllProductsByTypesId(int typesId) {
+        return ipr.findAllByTypesId(typesId);
+    }
+    public List<Product> getAllProductsByTypesIdAndCountriesId(int typesId, int countriesId) {
+        return ipr.findAllByTypesIdAndCountriesId(typesId, countriesId);
+    }
+    public Product getProduct(int id){
         return ipr.findById(id);
     }
-    public List<Product> getProductByTypeId(int typeId) {
-        return ipr.findAllByTypeId(typeId);
-    }
-    public List<Product> getAllProduct() {
-        return ipr.findAll();
-    }
+
 }

@@ -2,15 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <script src="../static/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/bootstrap.js"></script>
     <title>SWEETSHOP</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">SWEETSHOP</a>
+        <a class="navbar-brand" href="/">SWEETSHOP</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -21,27 +21,22 @@
                         Товары
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Макаруны</a></li>
-                        <li><a class="dropdown-item" href="#">Мороженое</a></li>
-                        <li><a class="dropdown-item" href="#">Печенье</a></li>
-                        <li><a class="dropdown-item" href="#">Пирожные</a></li>
-                        <li><a class="dropdown-item" href="#">Пончики</a></li>
-                        <li><a class="dropdown-item" href="#">Торты</a></li>
+                        <li th:each="type : ${types}"><a class="dropdown-item" th:href="@{/products(typesId=${type.getId()})}" th:text="${type.getName()}">TEXT</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="basket.html">Корзина</a>
+                    <a class="nav-link" href="../basket.html">Корзина</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="registration.html">Регистрация</a>
+                    <a class="nav-link" href="../registration.html">Регистрация</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Другое
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
 
-                        <li><a class="dropdown-item" href="feedback.html">Обратная связь</a></li>
+                        <li><a class="dropdown-item" href="/feedback">Обратная связь</a></li>
                     </ul>
                 </li>
             </ul>
@@ -53,7 +48,7 @@
     </div>
 </nav>
 <div class="welcome">
-    <div class="feya"><img src="../static/img/feya.png" width="280px"></div>
+    <div class="feya"><img src="img/feya.png" width="280px"></div>
     <div class="container text"><a class="aText">Друзья, если так случилось, что обычные пирожные и тортики из гастронома уже не будоражат Ваш вкус и хочется чего-то оригинального, то Вы попали на правильный сайт. Мы исследовали кухни разных стран в поисках оригинальных сладостей для Вашего стола. вы когда-нибудь слышали про такую сладость как макаруны? Невероятно вкусно, и никаких проблем с фигурой.</a></div>
 </div>
 <nav class="navbar fixed-bottom navbar-light bg-light">

@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.mirea.work.models.Country;
+import ru.mirea.work.models.CountryType;
 import ru.mirea.work.repositories.ICountryRepository;
+
+import java.util.List;
 
 
 @Service
@@ -17,7 +20,10 @@ public class CountryService {
     public CountryService(ICountryRepository icr){
         this.icr=icr;
     }
-    public Country getAllCountries(int id){
+    public List<Country> getAllCountries() {
+        return icr.findAll();
+    }
+    public Country getCountryById(int id) {
         return icr.findById(id);
     }
 }

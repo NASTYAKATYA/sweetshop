@@ -10,34 +10,33 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "products")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name="name", nullable = false)
     private String name;
+    @Column(name="types_id")
+    private int typesId;
     @Column(name="price")
     private int price;
     @Column(name="weight")
     private int weight;
     @Column(name="description")
     private String description;
-    @Column(name="types_id")
-    private int types_id;
     @Column(name="countries_id")
-    private int countries_id;
+    private int countriesId;
 
     @Override
     public String toString() {
         return "Departure{" +
                 "id=" + id +
-                ", types_id='" + types_id + '\'' +
+                ", types_id='" + typesId + '\'' +
                 ", name='" + name + '\'' +
                 ", price='" + price + '\'' +
                 ", weight='" + weight + '\'' +
                 ", description=" + description +
-                ", countries_id=" + countries_id +
+                ", countries_id=" + countriesId +
                 '}';
     }
 }

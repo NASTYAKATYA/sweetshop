@@ -7,5 +7,4 @@ import ru.mirea.work.models.Type;
 
 @Repository
 public interface ITypeRepository extends JpaRepository<Type, Integer> {
-    Type findById(int id);
 }

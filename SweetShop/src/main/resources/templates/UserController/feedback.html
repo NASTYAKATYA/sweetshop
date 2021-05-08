@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/bootstrap.js"></script>
+    <title>SWEETSHOP</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">SWEETSHOP</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Товары
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li th:each="type : ${types}"><a class="dropdown-item" th:href="@{/products(typesId=${type.getId()})}" th:text="${type.getName()}">TEXT</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../basket.html">Корзина</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../registration.html">Регистрация</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Другое
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+
+                        <li><a class="dropdown-item" href="/feedback">Обратная связь</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                <button class="btn btn-outline-success" type="submit">Поиск</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container welcome">
+    <div class="feya"><img src="img/feya.png" width="280px"></div>
+    <div class="row text">
+        <div class="col-6">
+            <a class="aText">
+                <p class="h2">Курсовая работа</p>
+                <p class="h5">ИКБО-03-19 Бирюкова Екатерина Витальевна</p>
+                <p>Целью курсовой работы является создание приложения на тему "Кондитерская".<br><br>Задачи, которые требуется решить для достижения цели:<br>
+                <ul class="list-group">
+                    <li class="list-group-item">1. Создать дизайн интернет-магазина;</li>
+                    <li class="list-group-item">2. Реализовать работу с базой данных;</li>
+                    <li class="list-group-item">3. Реализовать возможность регистрации;</li>
+                    <li class="list-group-item">4. Реализовать возможность добавления товара в корзину;</li>
+                    <li class="list-group-item">5. Протестировать работу приложения.</li>
+                </ul>
+                </p>
+            </a>
+        </div>
+        <div class="col-6">
+            <div class="feya"><img class="round" src="img/itsme.jpg" width="280px"></div>
+            <a class="aText"><p>Как с нами связаться:<br>
+                <ul class="list-group">
+                    <li class="list-group-item">тел. - 8 800-555-35-35</li>
+                    <li class="list-group-item">почта - biryukova.e.v@edu.mirea.ru</li>
+                    <li class="list-group-item">github - https://github.com/NASTYAKATYA</li>
+                </ul>
+                </p></a>
+        </div>
+    </div>
+</div>
+<nav class="navbar fixed-bottom navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand"></a>
+    </div>
+</nav>
+</body>
+</html>
