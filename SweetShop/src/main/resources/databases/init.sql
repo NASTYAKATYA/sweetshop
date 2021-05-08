@@ -28,3 +28,11 @@ CREATE TABLE IF NOT EXISTS products
     FOREIGN KEY (types_id) REFERENCES types (id) ON DELETE CASCADE ,
     FOREIGN KEY (countries_id) REFERENCES countries (id) ON DELETE CASCADE
 );
+create table if not exists users
+(
+    id serial primary key,
+    email text,
+    username text,
+    password text,
+    role text
+);
