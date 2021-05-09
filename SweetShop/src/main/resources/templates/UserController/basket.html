@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../../static/css/style.css">
-    <script src="../../static/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/bootstrap.js"></script>
     <title>SWEETSHOP</title>
 </head>
 <body>
@@ -25,7 +25,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../basket.html">Корзина</a>
+                    <a class="nav-link" href="/basket">Корзина</a>
                 </li>
                 <li class="nav-item" th:if="${userRole} == 'GUEST'">
                     <a class="nav-link" href="/login">Войти</a>
@@ -54,14 +54,48 @@
         </div>
     </div>
 </nav>
-<div class="welcome">
-    <div class="feya"><img src="../../static/img/feya.png" width="280px"></div>
-    <div class="text"><a class="aText">Друзья, если так случилось, что обычные пирожные и тортики из гастронома уже не будоражат Ваш вкус и хочется чего-то оригинального, то Вы попали на правильный сайт. Мы исследовали кухни разных стран в поисках оригинальных сладостей для Вашего стола. вы когда-нибудь слышали про такую сладость как макаруны? Невероятно вкусно, и никаких проблем с фигурой.</a></div>
+<div class="content container padding-site" style="background: rgba(255, 255, 255, 0.9); padding: 1em">
+    <h3>Корзина</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Название товара</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">ID</th>
+            <td>NAME</td>
+            <td>PRICE</td>
+            <td>QUANTITY</td>
+            <td>
+                <form>
+                    <input type="hidden" name="id">
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h5>Изменить количество   <button type="submit" class="btn btn-warning">Изменить</button></h5>
+
+    <form class="row g-3 col-4">
+        <div class="col-12">
+            <label for="inputAddress" class="form-label">Адрес</label>
+            <input name="address" type="text" class="form-control" id="inputAddress" placeholder="г. Брянск, ул. Шоссейная, д.43, кв.1" required>
+        </div>
+        <div class="col-md-12">
+            <label for="inputPhone" class="form-label">Номер телефона</label>
+            <input name="telephone" type="tel" class="form-control" id="inputPhone"  placeholder="88005553535" required>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Отправить заказ</button>
+        </div>
+    </form>
 </div>
-<nav class="navbar fixed-bottom navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand"></a>
-    </div>
-</nav>
 </body>
 </html>

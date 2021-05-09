@@ -118,5 +118,12 @@ public class UserController {
             request.login(username, password);
         } catch (ServletException e) { }
     }
+    @GetMapping("/basket")
+    public String basket(Model model, Authentication authentication){
+        String userRole = getUserRole(authentication);
+        model.addAttribute("userRole", userRole);
+        model.addAttribute("types", typeService.getAllTypes());
+        return "UserController/basket";
+    }
 }
 
