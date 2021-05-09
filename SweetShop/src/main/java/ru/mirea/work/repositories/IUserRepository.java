@@ -8,4 +8,5 @@ import ru.mirea.work.models.User;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Integer> {
     User findByUsername(String username);
+    Long deleteById(int id);
 }

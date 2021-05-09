@@ -26,4 +26,6 @@ public class CountryService {
     public Country getCountryById(int id) {
         return icr.findById(id);
     }
+    public  void saveCountry(Country country){icr.save(country);}
+    public void deleteById(int id){icr.deleteById(id);}
 }

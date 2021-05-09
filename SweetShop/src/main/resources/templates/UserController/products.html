@@ -43,9 +43,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
 
                         <li><a class="dropdown-item" href="/feedback">Обратная связь</a></li>
-                    </ul>
-                    <ul class="nav-item" th:if="${userRole} == 'ADMIN'">
-                        <li><a class="dropdown-item" href="/feedback">Админ панель</a></li>
+                        <li><a class="dropdown-item" href="/admin" th:if="${userRole} == 'ADMIN'">Админ панель</a></li>
                     </ul>
                 </li>
             </ul>
@@ -56,15 +54,18 @@
         </div>
     </div>
 </nav>
-<div class="content">
-    <div class="products-menu">
-        <nav class="nav flex-column product-types">
-            <a class="nav-link" th:href="@{/products(typesId=${typesId})}">Любая страна</a>
-            <a class="nav-link" th:each="countryType:${countryTypes}" th:text="${countryService.getCountryById(countryType.getCountriesId()).getName()}" th:href="@{/products(typesId=${typesId}, countryId=${countryType.getCountriesId()})}">TEXT</a>
+<div class="content container">
+    <div class="row">
+    <div class="col-4">
+        <div class="card"  style="width: 18rem; background: #fff;">
+        <nav class="nav flex-column product-types" style="margin: 0 auto;">
+            <a class="nav-link row" th:href="@{/products(typesId=${typesId})}">Любая страна</a>
+            <a class="nav-link row" th:each="countryType:${countryTypes}" th:text="${countryService.getCountryById(countryType.getCountriesId()).getName()}" th:href="@{/products(typesId=${typesId}, countryId=${countryType.getCountriesId()})}">TEXT</a>
         </nav>
+        </div>
     </div>
-    <div class="products container items-parent" th:each="product:${products}">
-        <div class="">
+
+    <div class="col-4 products" th:each="product:${products}">
             <div class="card" style="width: 18rem;">
                 <img th:src="'/img/' + ${product.getId()} + '.jpg'" class="card-img-top" alt="product-img">
                 <div class="card-body">

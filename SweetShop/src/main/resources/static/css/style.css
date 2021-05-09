@@ -22,3 +22,10 @@ body{
 	border-radius: 50%;
 	transform: translate(5%, 0px);
 }
+.content{
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+.sign{
+	background: rgba(255, 255, 255, 0.9);
+}

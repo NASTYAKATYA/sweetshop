@@ -27,5 +27,13 @@ public class ProductService {
     public Product getProduct(int id){
         return ipr.findById(id);
     }
-
+    public List<Product> getAll(){
+        return ipr.findAll();
+    }
+    public void saveProduct(Product product){
+        ipr.save(product);
+    }
+    public void deleteById(int id){
+        ipr.deleteById(id);
+    }
 }

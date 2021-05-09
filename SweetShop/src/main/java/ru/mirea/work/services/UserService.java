@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import ru.mirea.work.models.User;
 import ru.mirea.work.repositories.IUserRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -33,5 +35,14 @@ public class UserService implements UserDetailsService {
         u.setEmail(email);
         u.setRole("USER");
         iur.save(u);
+    }
+    public List<User> getAll(){
+        return iur.findAll();
+    }
+    public  void saveUser(User user){
+        iur.save(user);
+    }
+    public void deleteUser(int id){
+        iur.deleteById(id);
     }
 }

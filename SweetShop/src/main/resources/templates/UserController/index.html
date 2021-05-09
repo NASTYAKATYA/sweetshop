@@ -43,9 +43,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
 
                         <li><a class="dropdown-item" href="/feedback">Обратная связь</a></li>
-                    </ul>
-                    <ul class="nav-item" th:if="${userRole} == 'ADMIN'">
-                        <li><a class="dropdown-item" href="/feedback">Админ панель</a></li>
+                        <li><a class="dropdown-item" href="/admin" th:if="${userRole} == 'ADMIN'">Админ панель</a></li>
                     </ul>
                 </li>
             </ul>

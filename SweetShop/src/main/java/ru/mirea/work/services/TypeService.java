@@ -21,4 +21,10 @@ public class TypeService {
     public List<Type> getAllTypes() {
         return itr.findAll();
     }
+    public void saveType(Type type) {
+        itr.save(type);
+    }
+    public void deleteById(int id) {
+        itr.deleteById(id);
+    }
 }

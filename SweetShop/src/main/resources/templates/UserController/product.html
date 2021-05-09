@@ -43,9 +43,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
 
                         <li><a class="dropdown-item" href="/feedback">Обратная связь</a></li>
-                    </ul>
-                    <ul class="nav-item" th:if="${userRole} == 'ADMIN'">
-                        <li><a class="dropdown-item" href="/feedback">Админ панель</a></li>
+                        <li><a class="dropdown-item" href="/admin" th:if="${userRole} == 'ADMIN'">Админ панель</a></li>
                     </ul>
                 </li>
             </ul>
@@ -56,24 +54,18 @@
         </div>
     </div>
 </nav>
-<div class="">
-    <div class="">
-        <div class="card" style="width: 18rem;">
+<div class="content container">
+
+        <div class="card" style="width: 24rem;">
             <img th:src="'/img/' + ${product.getId()} + '.jpg'" class="card-img-top" alt="product-img">
             <div class="card-body">
                 <h5 class="card-title" th:text="${product.getName()}">Name</h5>
                 <p class="card-text" th:text="${product.getPrice()} + ' р.'">PRICE</p>
-                <a th:text="'Вес  '+${product.getWeight()}+'г.'">WEIGHT</a>
-                <a th:text="'Производитель  '+${country.getName()}">COUNTRY</a>
-                <a th:text="${product.getDescription()}">DESCRIPTION</a>
+                <p th:text="'Вес  '+${product.getWeight()}+'г.'">WEIGHT</p>
+                <p th:text="'Производитель  '+${country.getName()}">COUNTRY</p>
+                <p th:text="${product.getDescription()}">DESCRIPTION</p>
             </div>
         </div>
-    </div>
 </div>
-<nav class="navbar fixed-bottom navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand"></a>
-    </div>
-</nav>
 </body>
 </html>
