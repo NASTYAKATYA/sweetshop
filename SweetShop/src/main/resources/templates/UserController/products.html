@@ -56,7 +56,7 @@
 </nav>
 <div class="content container">
     <div class="row">
-    <div class="col-4">
+    <div class="col-lg-4 col-sm-6">
         <div class="card"  style="width: 18rem; background: #fff;">
         <nav class="nav flex-column product-types" style="margin: 0 auto;">
             <a class="nav-link row" th:href="@{/products(typesId=${typesId})}">Любая страна</a>
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div class="col-4 products" th:each="product:${products}">
+    <div class="col-lg-4 col-sm-6 products" th:each="product:${products}">
             <div class="card" style="width: 18rem;">
                 <img th:src="'/img/' + ${product.getId()} + '.jpg'" class="card-img-top" alt="product-img">
                 <div class="card-body">

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ICountryTypeRepository extends JpaRepository<CountryType, Integer> {
     List<CountryType> findAllByTypesId(int typesId);
+    Long deleteById(int id);
 }

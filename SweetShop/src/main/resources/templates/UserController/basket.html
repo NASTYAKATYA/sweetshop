@@ -55,35 +55,37 @@
     </div>
 </nav>
 <div class="content container padding-site" style="background: rgba(255, 255, 255, 0.9); padding: 1em">
-    <h3>Корзина</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Название товара</th>
-            <th scope="col">Цена</th>
-            <th scope="col">Количество</th>
-            <th scope="col">Удалить</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">ID</th>
-            <td>NAME</td>
-            <td>PRICE</td>
-            <td>QUANTITY</td>
-            <td>
-                <form>
-                    <input type="hidden" name="id">
-                    <button type="submit" class="btn btn-danger">Удалить</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <h5>Изменить количество   <button type="submit" class="btn btn-warning">Изменить</button></h5>
-
-    <form class="row g-3 col-4">
+    <h3 th:if="${basket.isEmpty() == true}" >Корзина пуста</h3>
+    <form th:if="${basket.isEmpty() == false}" th:method="POST" th:action="@{/basketOperation}">
+        <h3>Корзина</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Название товара</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Удалить</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="purchase : ${basket}">
+                <input type="hidden" name="purchaseToDeleteId" id="purchaseToDeleteId">
+                <input type="hidden" th:value="${purchase.getId()}" name="purchaseId[]">
+                <th scope="row" th:text="${purchase.getId()}">ID</th>
+                <td th:text="${productService.getProduct(purchase.getProductId()).getName()}">NAME</td>
+                <td th:text="${productService.getProduct(purchase.getProductId()).getPrice() * purchase.getProductCount()}">PRICE</td>
+                <td><input th:id="'productCount' + ${purchase.getId()}" type="number" class="form-control" name="productCount[]" min="1" max="10" style="width: 100px;" th:value="${purchase.getProductCount()}" th:onchange="'noEmpty(\'productCount'+ ${purchase.getId()} +'\')'"></td>
+                <td>
+                    <button type="submit" class="btn btn-danger" name="delete" th:onclick="'setDeletePurchase('+ ${purchase.getId()} +')'">Удалить</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Изменить количество <button type="submit" class="btn btn-warning" name="change">Изменить</button></h5>
+    </form>
+    <hr th:if="${basket.isEmpty() == false}">
+    <form th:if="${basket.isEmpty() == false}" class="row col-lg-4 col-sm-6" th:method="POST" th:action="@{/sendBasket}">
         <div class="col-12">
             <label for="inputAddress" class="form-label">Адрес</label>
             <input name="address" type="text" class="form-control" id="inputAddress" placeholder="г. Брянск, ул. Шоссейная, д.43, кв.1" required>
@@ -98,4 +100,15 @@
     </form>
 </div>
 </body>
+<script>
+    function noEmpty(id){
+        var countEl = document.getElementById(id);
+        if (countEl.value == "") {
+            countEl.value = 1;
+        }
+    }
+    function setDeletePurchase(id){
+        document.getElementById('purchaseToDeleteId').value = id;
+    }
+</script>
 </html>

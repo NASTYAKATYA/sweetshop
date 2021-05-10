@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.mirea.work.models.Country;
-import ru.mirea.work.models.Product;
-import ru.mirea.work.models.Type;
-import ru.mirea.work.models.User;
+import ru.mirea.work.models.*;
 import ru.mirea.work.services.*;
 
 import javax.persistence.Tuple;
@@ -126,5 +123,24 @@ public class AdminController {
     public String deleteUser(@RequestParam(name = "id")int id){
         userService.deleteUser(id);
         return "redirect:/admin/users";
+    }
+    @GetMapping("/typesCountries")
+    public String typesCountries(Model model){
+        model.addAttribute("typesCountries", countryTypeService.getAll());
+        return "AdminController/admin-typesCountries";
+    }
+    @PostMapping("/typesCountries/create")
+    public String typesCountriesCreate(@RequestParam(name = "typesId") int typesId,
+                                       @RequestParam(name = "countriesId") int countriesId){
+        CountryType newCountryType = new CountryType();
+        newCountryType.setTypesId(typesId);
+        newCountryType.setCountriesId(countriesId);
+        countryTypeService.saveCountryType(newCountryType);
+        return "redirect:/admin/typesCountries";
+    }
+    @PostMapping("/typesCountries/delete")
+    public String typesCountriesDelete(@RequestParam(name = "id") int id){
+        countryTypeService.deleteById(id);
+        return "redirect:/admin/typesCountries";
     }
 }

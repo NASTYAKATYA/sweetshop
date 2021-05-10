@@ -56,16 +56,37 @@
 </nav>
 <div class="content container">
 
-        <div class="card" style="width: 24rem;">
-            <img th:src="'/img/' + ${product.getId()} + '.jpg'" class="card-img-top" alt="product-img">
-            <div class="card-body">
-                <h5 class="card-title" th:text="${product.getName()}">Name</h5>
-                <p class="card-text" th:text="${product.getPrice()} + ' р.'">PRICE</p>
-                <p th:text="'Вес  '+${product.getWeight()}+'г.'">WEIGHT</p>
-                <p th:text="'Производитель  '+${country.getName()}">COUNTRY</p>
-                <p th:text="${product.getDescription()}">DESCRIPTION</p>
-            </div>
+    <div class="card" style="width: 24rem;">
+        <img th:src="'/img/' + ${product.getId()} + '.jpg'" class="card-img-top" alt="product-img">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${product.getName()}">Name</h5>
+            <p class="card-text" th:text="${product.getPrice()} + ' р.'">PRICE</p>
+            <p th:text="'Вес  '+${product.getWeight()}+'г.'">WEIGHT</p>
+            <p th:text="'Производитель  '+${country.getName()}">COUNTRY</p>
+            <p th:text="${product.getDescription()}">DESCRIPTION</p>
         </div>
+    </div>
+
+    <form th:method="POST" th:action="@{/product}" style="display: flex;margin-top: 15px;">
+        <div class="mb-3">
+            <input type="hidden" name="productId" th:value="${product.getId()}">
+            <input id="productCount" type="number" class="form-control" name="productCount" min="1" max="10" style="width: 100px;" value="1" onchange="noEmpty()">
+        </div>
+        <div class="col-auto" style="margin-left: 15px;">
+            <button type="submit" class="btn btn-primary mb-3">В корзину</button>
+        </div>
+    </form>
+    <p th:if="${Status} == 'user_guest'">Вам нужно зарегистрироваться, чтобы добавлять товар в корзину!</p>
+    <p th:if="${Status} == 'count_overflow'">Количество одного товара в корзине не может превышать 10!</p>
+    <p th:if="${Status} == 'OK'">Товар был добавлен в корзину</p>
 </div>
 </body>
+<script>
+    function noEmpty(){
+        var countEl = document.getElementById('productCount');
+        if (countEl.value == "") {
+            countEl.value = 1;
+        }
+    }
+</script>
 </html>

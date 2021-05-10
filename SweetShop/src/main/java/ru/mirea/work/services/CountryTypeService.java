@@ -20,4 +20,9 @@ public class CountryTypeService {
     public List<CountryType> getCountriesByTypeId(int typeId) {
         return ictr.findAllByTypesId(typeId);
     }
+    public List<CountryType> getAll() {
+        return ictr.findAll();
+    }
+    public void saveCountryType(CountryType countryType){ ictr.save(countryType);}
+    public void deleteById(int id){ ictr.deleteById(id);}
 }

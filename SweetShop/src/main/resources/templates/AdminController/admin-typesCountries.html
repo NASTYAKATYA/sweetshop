@@ -39,11 +39,13 @@
     </div>
 </nav>
 <div class="content container padding-site" style="background: rgba(255, 255, 255, 0.9);">
-    <h3>Создать новый тип</h3>
-    <form th:method="POST" th:action="@{/admin/types/create}">
+    <h3>Создать нового производителя товара</h3>
+    <form th:method="POST" th:action="@{/admin/typesCountries/create}">
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Тип продукта</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Тип" name="name">
+            <label for="exampleFormControlInput1" class="form-label">Тип товара</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="1" name="typesId">
+            <label for="exampleFormControlInput1" class="form-label">Производитель</label>
+            <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="1" name="countriesId">
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Создать</button>
@@ -54,17 +56,19 @@
         <thead>
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Name</th>
+            <th scope="col">TypeId</th>
+            <th scope="col">CountryId</th>
             <th scope="col">Удалить</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="type: ${types}" th:method="POST">
-            <th scope="row" th:text="${type.getId()}">ID</th>
-            <td th:text="${type.getName()}">NAME</td>
+        <tr th:each="typeCountry: ${typesCountries}" th:method="POST">
+            <th scope="row" th:text="${typeCountry.getId()}">ID</th>
+            <td th:text="${typeCountry.getTypesId()}">TYPEID</td>
+            <td th:text="${typeCountry.getCountriesId()}">COUNTRYID</td>
             <td>
-                <form th:method="POST" th:action="@{/admin/types/delete}">
-                    <input type="hidden" name="id" th:value="${type.getId()}">
+                <form th:method="POST" th:action="@{/admin/typesCountries/delete}">
+                    <input type="hidden" name="id" th:value="${typeCountry.getId()}">
                     <button type="submit" class="btn btn-danger">Удалить</button>
                 </form>
             </td>
