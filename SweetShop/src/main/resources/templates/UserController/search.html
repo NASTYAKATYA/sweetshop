@@ -54,40 +54,20 @@
         </div>
     </div>
 </nav>
-<div class="container welcome">
-    <div class="feya"><img src="img/feya.png" width="280px"></div>
-    <div class="row text">
-        <div class="col-6">
-            <a class="aText">
-                <p class="h2">Курсовая работа</p>
-                <p class="h5">ИКБО-03-19 Бирюкова Екатерина Витальевна</p>
-                <p>Целью курсовой работы является создание приложения на тему "Кондитерская".<br><br>Задачи, которые требуется решить для достижения цели:<br>
-                <ul class="list-group">
-                    <li class="list-group-item">1. Создать дизайн интернет-магазина;</li>
-                    <li class="list-group-item">2. Реализовать работу с базой данных;</li>
-                    <li class="list-group-item">3. Реализовать возможность регистрации;</li>
-                    <li class="list-group-item">4. Реализовать возможность добавления товара в корзину;</li>
-                    <li class="list-group-item">5. Протестировать работу приложения.</li>
-                </ul>
-                </p>
-            </a>
-        </div>
-        <div class="col-6">
-            <div class="feya"><img class="round" src="img/itsme.jpg" width="280px"></div>
-            <a class="aText"><p>Как с нами связаться:<br>
-                <ul class="list-group">
-                    <li class="list-group-item">тел. - 8 800-555-35-35</li>
-                    <li class="list-group-item">почта - biryukova.e.v@edu.mirea.ru</li>
-                    <li class="list-group-item">github - https://github.com/NASTYAKATYA</li>
-                </ul>
-                </p></a>
-        </div>
+<div class="content container">
+    <h3 th:if="${products.isEmpty()==true}">Ничего не найдено</h3>
+    <div class="row">
+        <div class="col-lg-4 col-sm-6 products" th:each="product:${products}">
+            <div class="card" style="width: 18rem;">
+                <img th:src="'/img/' + ${product.getId()} + '.jpg'" class="card-img-top" alt="product-img">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.getName()}">Name</h5>
+                    <p class="card-text" th:text="${product.getPrice()} + ' р.'">PRICE</p>
+                    <a th:href="@{/product(productId=${product.getId()})}" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </h3>
     </div>
 </div>
-<nav class="navbar fixed-bottom navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand"></a>
-    </div>
-</nav>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package ru.mirea.work.controllers;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,7 @@ public class UserController {
     private final UserService userService;
     private final PurchaseService purchaseService;
     private final EmailService emailService;
+    private final CriteriaService criteriaService;
 
     private String addPurchaseStatus = "";
 
@@ -39,7 +42,8 @@ public class UserController {
                           CountryTypeService countryTypeService,
                           CountryService countryService,
                           UserService userService,
-                          PurchaseService purchaseService, EmailService emailService) {
+                          PurchaseService purchaseService, EmailService emailService,
+                          CriteriaService criteriaService) {
         this.typeService = typeService;
         this.productService = productService;
         this.countryTypeService = countryTypeService;
@@ -47,6 +51,7 @@ public class UserController {
         this.userService = userService;
         this.purchaseService = purchaseService;
         this.emailService = emailService;
+        this.criteriaService=criteriaService;
     }
 
     private String getUserRole(Authentication authentication) {
@@ -250,6 +255,15 @@ public class UserController {
         emailService.sendmail("katyabi2010@gmail.com", managerMessage, true);
         purchaseService.deleteAllByUserId(user.getId());
         return "redirect:/basket";
+    }
+    @GetMapping("/search")
+    public String searchProduct(@RequestParam(name ="name") String name,
+                                       Model model, Authentication authentication){
+        String userRole = getUserRole(authentication);
+        model.addAttribute("userRole", userRole);
+        model.addAttribute("types", typeService.getAllTypes());
+        model.addAttribute("products",criteriaService.getAllByName(name));
+        return "UserController/search";
     }
     public void authWithHttpServletRequest(HttpServletRequest request, String username, String password) {
         try {
