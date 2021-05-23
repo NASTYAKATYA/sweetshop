@@ -74,7 +74,7 @@
                 <input type="hidden" th:value="${purchase.getId()}" name="purchaseId[]">
                 <th scope="row" th:text="${purchase.getId()}">ID</th>
                 <td th:text="${productService.getProduct(purchase.getProductId()).getName()}">NAME</td>
-                <td th:text="${productService.getProduct(purchase.getProductId()).getPrice() * purchase.getProductCount()}">PRICE</td>
+                <td th:text="${productService.getProduct(purchase.getProductId()).getPrice() * purchase.getProductCount()} + ' р.'">PRICE</td>
                 <td><input th:id="'productCount' + ${purchase.getId()}" type="number" class="form-control" name="productCount[]" min="1" max="10" style="width: 100px;" th:value="${purchase.getProductCount()}" th:onchange="'noEmpty(\'productCount'+ ${purchase.getId()} +'\')'"></td>
                 <td>
                     <button type="submit" class="btn btn-danger" name="delete" th:onclick="'setDeletePurchase('+ ${purchase.getId()} +')'">Удалить</button>
@@ -82,7 +82,11 @@
             </tr>
             </tbody>
         </table>
-        <h5>Изменить количество <button type="submit" class="btn btn-warning" name="change">Изменить</button></h5>
+        <h5><br>
+            Общая стоимость
+            <small class="text-muted" th:text="${totalPrice} + ' р.'">TOTAL PRICE</small>
+        </h5>
+        <h5><br>Изменить количество <button type="submit" class="btn btn-warning" name="change">Изменить</button></h5>
     </form>
     <hr th:if="${basket.isEmpty() == false}">
     <form th:if="${basket.isEmpty() == false}" class="row col-lg-4 col-sm-6" th:method="POST" th:action="@{/sendBasket}">
@@ -95,7 +99,8 @@
             <input name="telephone" type="tel" class="form-control" id="inputPhone"  placeholder="88005553535" required>
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Отправить заказ</button>
+            <br>
+            <button type="submit" class="btn btn-primary">Оформить заказ</button>
         </div>
     </form>
 </div>

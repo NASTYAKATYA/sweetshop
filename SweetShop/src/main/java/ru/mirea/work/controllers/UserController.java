@@ -219,6 +219,7 @@ public class UserController {
     public String basket(Model model, Authentication authentication){
         String userRole = getUserRole(authentication);
         int userId = getUserId(authentication);
+        model.addAttribute("totalPrice", getTotalPrice(purchaseService.getPurchasesByUserId(userId)));
         model.addAttribute("userRole", userRole);
         model.addAttribute("types", typeService.getAllTypes());
         List<Purchase> purchases = purchaseService.getPurchasesByUserId(userId);
