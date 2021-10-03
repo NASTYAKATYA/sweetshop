@@ -10,23 +10,46 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Класс модели представления для пользователя
+ * @author Бирюкова Екатерина
+ */
 @Getter
 @Setter
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+    /**
+     * Идентификатор пользователя
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    /**
+     * Электронная почта пользователя
+     */
     @Column(name="email")
     private String email;
+    /**
+     * Имя пользователя
+     */
     @Column(name="username")
     private String username;
+    /**
+     * Пароль пользователя
+     */
     @Column(name="password")
     private String password;
+    /**
+     * РОль пользователя
+     */
     @Column(name="role")
     private String role;
 
+    /**
+     * Переопределенный метод ToString() - строковое представление данных
+     * @return Возращает информацию о пользователе в строковом формате
+     */
     @Override
     public String toString() {
         return "User{" +

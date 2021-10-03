@@ -17,21 +17,43 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Класс-сервис для фильтрации моделей по полю
+ * @author Бирюкова Екатерина
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
 public class CriteriaService {
+    /**
+     * Неизменяемый потокобезопасный объект с компилированным маппингом для одной базы данных
+     */
     private final SessionFactory sessionFactory;
+    /**
+     * Однопоточный короткоживущий объект, который предоставляет связь между объектами приложения и базой данных
+     */
     private Session session;
+    /**
+     * Конструктор определяющий session
+     */
     @PostConstruct
     void init() {
         session = sessionFactory.openSession();
     }
+    /**
+     * Деструктор освобождающий session
+     */
     @PreDestroy
     void closeSession() {
         session.close();
     }
+
+    /**
+     * Метод фильтрует модели продуктов по переданной строке
+     * @param searchName Название продукта
+     * @return Возвращает список продуктов, название которых соответствует переданной строке
+     */
     public List<Product> getAllByName(String searchName) {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Product> orderCriteriaQuery = builder.createQuery(Product.class);

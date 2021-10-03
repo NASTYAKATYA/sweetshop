@@ -22,20 +22,62 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Данный класс является контроллером для пользователей
+ * @author Бирюкова Екатерина
+ */
 @Controller
 @RequestMapping("/")
 public class UserController {
+    /**
+     * Сервис для видов кондитерских изделий
+     */
     private final TypeService typeService;
+    /**
+     * Сервис для продуктов
+     */
     private final ProductService productService;
+    /**
+     * Сервис для стран, которые изготавливают определенный тип изделия
+     */
     private final CountryTypeService countryTypeService;
+    /**
+     * Сервис для стран-изготовителей
+     */
     private final CountryService countryService;
+    /**
+     * Сервис для пользователей
+     */
     private final UserService userService;
+    /**
+     * Сервис для корзины
+     */
     private final PurchaseService purchaseService;
+    /**
+     * Сервис для отправки оповещений на электронную почту
+     */
     private final EmailService emailService;
+    /**
+     * Сервис для поиска продуктов
+     */
     private final CriteriaService criteriaService;
 
+    /**
+     * Статус для корзины
+     */
     private String addPurchaseStatus = "";
 
+    /**
+     * Конструктор контроллера для пользователей
+     * @param typeService Сервис для видов кондитерских изделий
+     * @param productService Сервис для продуктов
+     * @param countryTypeService Сервис для стран, которые изготавливают определенный тип изделия
+     * @param countryService Сервис для стран-изготовителей
+     * @param userService Сервис для пользователей
+     * @param purchaseService Сервис для корзины
+     * @param emailService Сервис для отправки оповещений на электронную почту
+     * @param criteriaService Сервис для поиска продуктов
+     */
     @Autowired
     public UserController(TypeService typeService,
                           ProductService productService,
@@ -54,6 +96,11 @@ public class UserController {
         this.criteriaService=criteriaService;
     }
 
+    /**
+     * Метод дл яполучения роли пользователя
+     * @param authentication Объект идентифицирующий пользователя, обратившегося к методу
+     * @return Возвращает роль пользователя
+     */
     private String getUserRole(Authentication authentication) {
         if (authentication == null)
             return "GUEST";
@@ -61,19 +108,38 @@ public class UserController {
             return ((User)userService.loadUserByUsername(authentication.getName())).getRole();
     }
 
+    /**
+     * Метод для получения идентификатора пользователя
+     * @param authentication Объект идентифицирующий пользователя, обратившегося к методу
+     * @return Возвращает идентификатор пользователя
+     */
     private int getUserId(Authentication authentication) {
         if (authentication == null)
             return 0;
         else
             return ((User)userService.loadUserByUsername(authentication.getName())).getId();
     }
+
+    /**
+     * Метод обновляет статус корзины
+     */
     private void reloadAddPurchaseStatus() {
         addPurchaseStatus = "";
     }
+
+    /**
+     * Метод устанавливает статус корзины
+     * @param status стату корзины
+     */
     private void setAddPurchaseStatus(String status) {
         addPurchaseStatus = status;
     }
 
+    /**
+     * Метод для получения общей суммы заказа
+     * @param purchases Товары в корзине
+     * @return Возвращает общую сумму заказа
+     */
     private int getTotalPrice(List<Purchase> purchases) {
         int result = 0;
         for (Purchase purchase: purchases) {
@@ -82,6 +148,11 @@ public class UserController {
         return result;
     }
 
+    /**
+     * Метод шаблона оповещения для пользователя
+     * @param userPurchases Товары из корзины пользователя
+     * @return Возвращает письмо для отправки пользователю
+     */
     private String createMessageForUser(List<Purchase> userPurchases) {
         List<Product> userProducts = new ArrayList<>();
         for (Purchase purchase: userPurchases) {
@@ -95,6 +166,14 @@ public class UserController {
         return result;
     }
 
+    /**
+     * Метод шаблона оповещения для менеджера
+     * @param user Пользователь, который оформил заказ
+     * @param address Адрес доставки
+     * @param telephone Номер телефона пользователя
+     * @param userPurchases Товары из корзины пользователя
+     * @return Возвращает письмо для отправки менеджеру
+     */
     private String createMessageForManager(User user, String address, String telephone, List<Purchase> userPurchases) {
         List<Product> userProducts = new ArrayList<>();
         for (Purchase purchase: userPurchases) {
@@ -113,6 +192,12 @@ public class UserController {
         return result;
     }
 
+    /**
+     * Метод принимающий GET запросы /
+     * @param authentication Объект идентифицирующий пользователя обратившегося к методу
+     * @param model Объект предоставляющий атрибуты, используемые для визуализации представлений
+     * @return Возвращает главную страницу
+     */
     @GetMapping
     public String index(Authentication authentication, Model model) {
         String userRole = getUserRole(authentication);
@@ -120,6 +205,15 @@ public class UserController {
         model.addAttribute("types", typeService.getAllTypes());
         return "UserController/index";
     }
+
+    /**
+     * Метод принимающий GET запросы /products
+     * @param typesId Идентификатор вида изделия
+     * @param countryId Идентификатор страны-изготовителя
+     * @param model Объект предоставляющий атрибуты, используемые для визуализации представлений
+     * @param authentication Объект идентифицирующий пользователя обратившегося к методу
+     * @return Возвращает страницу с продуктами
+     */
     @GetMapping("/products")
     public String products(@RequestParam(name = "typesId") int typesId,
                            @RequestParam(name = "countryId", required = false) Integer countryId,
@@ -136,6 +230,14 @@ public class UserController {
             model.addAttribute("products", productService.getAllProductsByTypesIdAndCountriesId(typesId, countryId));
         return "UserController/products";
     }
+
+    /**
+     * Метод принимающий GET запросы /product
+     * @param productId Идентификатор продукта
+     * @param model Объект предоставляющий атрибуты, используемые для визуализации представлений
+     * @param authentication Объект идентифицирующий пользователя обратившегося к методу
+     * @return Возвращает страницу с определеннным продуктом
+     */
     @GetMapping("/product")
     public String product(@RequestParam(name ="productId") int productId,
                           Model model, Authentication authentication){
@@ -149,6 +251,13 @@ public class UserController {
         reloadAddPurchaseStatus();
         return "UserController/product";
     }
+
+    /**
+     * Метод принимающий GET запросы /feedback
+     * @param model Объект предоставляющий атрибуты, используемые для визуализации представлений
+     * @param authentication Объект идентифицирующий пользователя обратившегося к методу
+     * @return Возвращает страницу с обратной связью и информацией о магазине
+     */
     @GetMapping("/feedback")
     public String feedback(Model model, Authentication authentication){
         String userRole = getUserRole(authentication);
@@ -156,11 +265,25 @@ public class UserController {
         model.addAttribute("types", typeService.getAllTypes());
         return "UserController/feedback";
     }
+
+    /**
+     * Метод принимающий GET запросы /sign
+     * @return Возвращает страницу с регистрацией
+     */
     @GetMapping("/sign")
     public String sign() {
         return "UserController/sign";
     }
 
+    /**
+     * Метод принимающий POST запросы /sign для регистрации пользователей
+     * @param request Объект содержащий запрос, поступивший от пользователя
+     * @param email Электронная почта пользователя
+     * @param username Имя пользователя
+     * @param password Пароль пользователя
+     * @param model Объект предоставляющий атрибуты, используемые для визуализации представлений
+     * @return Возвращает страницу регистрации, если имя пользователя уже существует, иначе главную страницу
+     */
     @PostMapping("/sign")
     public String signCreate(HttpServletRequest request,
                              @RequestParam(name = "email") String email,
@@ -177,6 +300,14 @@ public class UserController {
             return "redirect:/";
         }
     }
+
+    /**
+     * Метод принимающий POST запросы /product добавляет продукты в корзину
+     * @param authentication Объект идентифицирующий пользователя обратившегося к методу
+     * @param productId Идентификатор продукта
+     * @param productCount Количество продукта
+     * @return Возвращает страницу определенного продукта
+     */
     @PostMapping("/product")
     public String addToBasket(Authentication authentication,
                               @RequestParam(name = "productId") int productId,
@@ -215,6 +346,13 @@ public class UserController {
             }
         }
     }
+
+    /**
+     * Метод принимающий GET запросы /basket
+     * @param model Объект предоставляющий атрибуты, используемые для визуализации представлений
+     * @param authentication Объект идентифицирующий пользователя обратившегося к методу
+     * @return Возвращает страницу корзины
+     */
     @GetMapping("/basket")
     public String basket(Model model, Authentication authentication){
         String userRole = getUserRole(authentication);
@@ -229,6 +367,13 @@ public class UserController {
 
         return "UserController/basket";
     }
+
+    /**
+     * Метод принимающий POST запросы /basketOperation для изменения количества товаров в корзине
+     * @param purchaseIds Идентификаторы товаров в корзине
+     * @param productCounts Количество товаров
+     * @return Возвращает страницу корзины
+     */
     @PostMapping(value = "/basketOperation", params = "change")
     public String changeBasket(@RequestParam(name = "purchaseId[]") int[] purchaseIds,
                                @RequestParam(name = "productCount[]") int[] productCounts) {
@@ -239,11 +384,25 @@ public class UserController {
         }
         return "redirect:/basket";
     }
+
+    /**
+     * Метод принимающий POST запросы /basketOperation для удаления товара из корзины
+     * @param purchaseToDeleteId Идентификатор товара, который надо удалить
+     * @return Возвращает страницу корзины
+     */
     @PostMapping(value = "/basketOperation", params = "delete")
     public String deleteBasket(@RequestParam(name = "purchaseToDeleteId") int purchaseToDeleteId) {
         purchaseService.deletePurchaseById(purchaseToDeleteId);
         return "redirect:/basket";
     }
+
+    /**
+     * Метод принимающий POST запросы /sendBasket для отпраки оповещений пользователю и менеджеру
+     * @param authentication Объект идентифицирующий пользователя обратившегося к методу
+     * @param address Адрес пользователя
+     * @param telephone Номер телефона пользователя
+     * @return ВОзвращает страницу корзины
+     */
     @SneakyThrows
     @PostMapping(value = "/sendBasket")
     public String sendBasket(Authentication authentication,
@@ -257,6 +416,14 @@ public class UserController {
         purchaseService.deleteAllByUserId(user.getId());
         return "redirect:/basket";
     }
+
+    /**
+     * Метод принимающий GET запросы /search
+     * @param name Имя продукта для поиска
+     * @param model Объект предоставляющий атрибуты, используемые для визуализации представлений
+     * @param authentication Объект идентифицирующий пользователя обратившегося к методу
+     * @return Возвращает поиска проуктов
+     */
     @GetMapping("/search")
     public String searchProduct(@RequestParam(name ="name") String name,
                                        Model model, Authentication authentication){
@@ -266,6 +433,13 @@ public class UserController {
         model.addAttribute("products",criteriaService.getAllByName(name));
         return "UserController/search";
     }
+
+    /**
+     * Метод для проверки существования пользователя
+     * @param request Объект содержащий запрос, поступивший от пользователя
+     * @param username Имя пользователя
+     * @param password Пароль пользователя
+     */
     public void authWithHttpServletRequest(HttpServletRequest request, String username, String password) {
         try {
             request.login(username, password);
